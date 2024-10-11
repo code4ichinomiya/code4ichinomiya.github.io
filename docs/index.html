@@ -26,7 +26,7 @@
         body {
             font-family: "Meiryo", "Hiragino Maru Gothic Pro", sans-serif;
             background-attachment: fixed;
-            background-image: url("./images/background.png");
+            background-image: url("./images/background.jpg");
             background-position: top left;
             background-repeat: no-repeat;
             background-size: cover;
@@ -46,8 +46,8 @@
             width: 100%;
             height: 100vh;
             background-repeat: no-repeat;
-            background-position: top left;
-            background-image: url("./images/background.png");
+            background-position: top center;
+            background-image: url("./images/background.jpg");
             background-size: cover;
             background-color: rgba(255, 255, 255, 0.2);
             background-blend-mode: lighten;
@@ -62,6 +62,9 @@
             background-color: rgba(81, 55, 67, 0.4);
         }
 
+        .profile {
+            border-radius: 100%;
+        }
     </style>
 
     <script type="module">
@@ -69,6 +72,85 @@
 
 
     </script>
+
+</head>
+
+<body>
+
+    <center>
+        <div class="main text-center">
+
+            <div id="top" class="text-white md:mt-16 px-5 pt-10 pb-5 text-center">
+                <center>
+                    <img src="images/apple-touch-icon.png" class="rounded-full mb-5 w-52 md:w-60"
+                        alt="Code for Ichinomiya">
+                </center>
+
+                <h1 id="title" class="text-3xl pt-5 pb-5 mb-5">Code for Ichinomiya</h1>
+
+                <p class="mb-5 text-xl">育む（はぐくむ）<br>シビックテック</p>
+
+            </div>
+
+            <div id="overview" class="bg-white">
+                <p class="p-5 text-left text-lg">
+                    皆さんはシビックテック（CivicTech）をご存知ですか？市民（Civic）が自らデジタルの技術（Tech）を用いて、地域課題（Region）を解決していく取り組みのことです。日本では、東日本大震災後、Code
+                    for Japanという団体が誕生したことがきっかけで、シビックテックの活動が増えています。Code for Ichinomiyaは、愛知県一宮市にて、シビックテックの活動を行なっています。
+                </p>
+
+                <hr>
+
+                <div id="member" class="p-5 bg-white text-zinc-600">
+
+                    <div class="flex flex-row mb-5">
+
+                        <div class="text-left basis-2/3">
+
+                            <h2 class="text-2xl">代表：齋藤 仁志</h2>
+
+                            <p class="text-xs md:text-lg">
+                                【シビックテックの面白さを広めたい！】デジタル庁「デジタル推進委員」｜アプリ開発・データ可視化を軸に活動中｜オープンデータをフル活用｜行政とシビックテックの二刀流｜デジタルから世界を変えられるか？《受賞歴》UDCオープンガバメント協議会銀賞/PLATEAU賞/防災LOD賞/OSM賞
+                                etc.</p>
+
+                        </div>
+
+                        <div class="basis-1/3 mt-2">
+
+                            <img src="./images/profile1.jpg" class="profile">
+
+                        </div>
+
+                    </div>
+
+                    <div class="flex flex-row mt-5">
+
+                        <div class="text-left basis-1/3">
+
+                            <img src="./images/profile2.jpg" class="profile">
+
+                        </div>
+
+                        <div class="basis-2/3 mt-2 text-left ml-5">
+
+                            <h2 class="text-2xl">副代表：齋藤 千裕</h2>
+
+                            <p class="text-xs md:text-lg">【ビジョンを達成するスマイルプロジェクトをここから】
+                                健幸で仕事もプライベートも自己実現を| 中医学(漢方)を学び中 健康を体現する！スマイルプロジェクト 主宰| 理学療法士の国家資格保持｜書道準師範
+                                書道セラピー作る　SDGs:3 | 家族と料理好き </p>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </center>
+
+
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MPP84V2NHB"></script>
@@ -79,36 +161,6 @@
 
         gtag('config', 'G-MPP84V2NHB');
     </script>
-</head>
-
-<body>
-
-    <center>
-        <div class="main text-center">
-
-            <div id="top" class="text-white md:mt-16 px-5 pt-10 pb-5 text-center">
-                    <center>
-                    <img src="images/apple-touch-icon.png" class="rounded-full mb-5 w-52 md:w-60"
-                        alt="Code for Ichinomiya">
-                        </center>
-
-                    <h1 id="title" class="text-3xl pt-5 pb-5 mb-5">Code for Ichinomiya</h1>
-
-                        <p class="mb-5 text-xl">育む（はぐくむ）<br>シビックテック</p>
-
-            </div>
-
-            <div id="overview" class="bg-white">
-                aaa
-
-
-                </div>
-
-
-        </div>
-    </center>
-
-
 </body>
 
 </html>
