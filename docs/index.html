@@ -72,14 +72,70 @@
             background-color: rgba(81, 55, 67, 0.4);
         }
 
+        #top .theme {
+            border: 5px solid #bf783a;
+        }
+
         .profile {
             border-radius: 100%;
         }
 
-        #footer a {
-            border-bottom: 2px dotted #ffffff;
+        .dual {
+            position: relative;
         }
 
+        .dual_s {
+            position: absolute;
+            left: .5rem;
+            bottom: -3.5rem;
+            opacity: 0.2;
+
+        }
+
+        .dual_s img {
+            width: 10rem;
+        }
+
+        .calligraphy {
+            position: relative;
+        }
+
+        .calligraphy_s {
+            position: absolute;
+            right: .5rem;
+            bottom: -3.5rem;
+            opacity: 0.2;
+
+        }
+
+        .calligraphy_s img {
+            width: 8rem;
+        }
+
+        @media screen and (max-width: 767px) {
+
+            .dual_s {
+                bottom: -2.5rem;
+            }
+
+            .dual_s img {
+                width: 7rem;
+            }
+
+
+            .calligraphy_s {
+                bottom: -1.5rem;
+            }
+
+            .calligraphy_s img {
+                width: 5rem;
+            }
+
+        }
+
+        #footer p a {
+            border-bottom: 2px dotted #ffffff;
+        }
     </style>
 
 
@@ -100,15 +156,28 @@
 
                 <p class="mb-5 text-xl">育む（はぐくむ）<br>シビックテック</p>
 
+                <center>
+
+                    <img src="./images/theme.jpg" alt="Code for Ichinomiya Theme" class="theme" width="70%">
+
+                </center>
+
             </div>
 
             <div id="overview" class="bg-white">
-                <p class="pt-7 pl-7 pr-7 pb-3 text-left text-lg">
+
+                <h2 class="text-2xl text-left pt-5 ml-5">はじめに</h2>
+
+                <p class="pt-5 pl-7 pr-7 pb-3 text-left text-lg">
                     皆さんはシビックテック（CivicTech）をご存知ですか？市民（Civic）が自らデジタル技術（Tech）を用いて、地域課題（Region）を解決していく取り組みのことです。
                 </p>
-                <p class="pt-3 pl-7 pr-7 pb-7 text-left text-lg">
-                    日本では、東日本大震災後、Code for Japanという団体が誕生したことがきっかけで、シビックテックの活動が増えています。Code for
-                    Ichinomiyaは、愛知県一宮市にて、シビックテックの活動を行なっています。
+                <p class="pt-3 pl-7 pr-7 pb-5 text-left text-lg">
+                    日本では、東日本大震災後、Code for Japanという団体が誕生したことがきっかけで、シビックテックの活動が増えています。
+
+                </p>
+
+                <p class="pt-1 pl-7 pr-7 pb-7 text-left text-lg">
+                    Code for Ichinomiyaは、愛知県一宮市にて、シビックテックの活動を行なっています。
                 </p>
 
                 <hr>
@@ -123,9 +192,9 @@
 
                             <h2 class="text-2xl">代表：齋藤 仁志</h2>
 
-                            <p class="text-xs md:text-lg">
+                            <p class="text-xs md:text-lg dual">
                                 【シビックテックの面白さを広めたい！】デジタル庁「デジタル推進委員」｜アプリ開発・データ可視化を軸に活動中｜オープンデータをフル活用｜行政とシビックテックの二刀流｜デジタルから世界を変えられるか？《受賞歴》UDCオープンガバメント協議会銀賞/PLATEAU賞/防災LOD賞/OSM賞
-                                etc.</p>
+                                etc.<span class="dual_s"><img src="./images/back_dual.jpg"></span></p>
 
                         </div>
 
@@ -137,21 +206,22 @@
 
                     </div>
 
-                    <div class="flex flex-row">
+                    <div class="flex flex-row mb-10">
 
-                        <div class="text-left mt-7 basis-1/3">
+                        <div class="text-left mt-12 basis-1/3">
 
                             <img src="./images/profile2.jpg" class="profile">
 
                         </div>
 
-                        <div class="basis-2/3 mt-5 text-left ml-5">
+                        <div class="basis-2/3 mt-10 text-left ml-5">
 
                             <h2 class="text-2xl">副代表：齋藤 千裕</h2>
 
-                            <p class="text-xs md:text-lg">【ビジョンを達成するスマイルプロジェクトをここから】
+                            <p class="text-xs md:text-lg calligraphy">【ビジョンを達成するスマイルプロジェクトをここから】
                                 健幸で仕事もプライベートも自己実現を| 中医学(漢方)を学び中 健康を体現する！スマイルプロジェクト 主宰| 理学療法士の国家資格保持｜書道準師範
-                                書道セラピー作る　SDGs:3 | 家族と料理好き </p>
+                                書道セラピー作る　SDGs:3 | 家族と料理好き<span class="calligraphy_s"><img
+                                        src="./images/back_calligraphy.jpg"></span></p>
 
 
                         </div>
@@ -185,11 +255,20 @@
 
                 </div>
 
-                <div id="footer" class="p-5 bg-black text-white text-left mb-16">
+                <div id="footer" class="p-5 bg-black text-white text-left md:mb-16">
 
                     <p>Design and Code by <a href="https://hitoshi2s.netlify.app/" target="_blank">齋藤 仁志</a>.</p>
 
-                    <p class="mt-5">Build with Tailwind.</p>
+                    <p class="my-5">Build with Tailwind.</p>
+
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" target="_blank"><img
+                            src="./images/license.jpg"></a>
+
+                    <center>
+
+                        <img src="./images/qr.jpg" class="mt-5">
+
+                    </center>
 
                 </div>
 
