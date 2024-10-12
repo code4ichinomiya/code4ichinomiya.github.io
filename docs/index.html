@@ -22,6 +22,16 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"
+        integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"
+        integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-pulse-icon@0.1.0/src/L.Icon.Pulse.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/leaflet-pulse-icon@0.1.0/src/L.Icon.Pulse.min.css" rel="stylesheet">
+
     <style>
         body {
             font-family: "Meiryo", "Hiragino Maru Gothic Pro", sans-serif;
@@ -65,13 +75,13 @@
         .profile {
             border-radius: 100%;
         }
+
+        #footer a {
+            border-bottom: 2px dotted #ffffff;
+        }
+
     </style>
 
-    <script type="module">
-
-
-
-    </script>
 
 </head>
 
@@ -93,14 +103,19 @@
             </div>
 
             <div id="overview" class="bg-white">
-                <p class="p-5 text-left text-lg">
-                    皆さんはシビックテック（CivicTech）をご存知ですか？市民（Civic）が自らデジタルの技術（Tech）を用いて、地域課題（Region）を解決していく取り組みのことです。日本では、東日本大震災後、Code
-                    for Japanという団体が誕生したことがきっかけで、シビックテックの活動が増えています。Code for Ichinomiyaは、愛知県一宮市にて、シビックテックの活動を行なっています。
+                <p class="pt-7 pl-7 pr-7 pb-3 text-left text-lg">
+                    皆さんはシビックテック（CivicTech）をご存知ですか？市民（Civic）が自らデジタル技術（Tech）を用いて、地域課題（Region）を解決していく取り組みのことです。
+                </p>
+                <p class="pt-3 pl-7 pr-7 pb-7 text-left text-lg">
+                    日本では、東日本大震災後、Code for Japanという団体が誕生したことがきっかけで、シビックテックの活動が増えています。Code for
+                    Ichinomiyaは、愛知県一宮市にて、シビックテックの活動を行なっています。
                 </p>
 
                 <hr>
 
                 <div id="member" class="p-5 bg-white text-zinc-600">
+
+                    <h2 class="text-2xl text-left mb-5">メンバー</h2>
 
                     <div class="flex flex-row mb-5">
 
@@ -122,15 +137,15 @@
 
                     </div>
 
-                    <div class="flex flex-row mt-5">
+                    <div class="flex flex-row">
 
-                        <div class="text-left basis-1/3">
+                        <div class="text-left mt-7 basis-1/3">
 
                             <img src="./images/profile2.jpg" class="profile">
 
                         </div>
 
-                        <div class="basis-2/3 mt-2 text-left ml-5">
+                        <div class="basis-2/3 mt-5 text-left ml-5">
 
                             <h2 class="text-2xl">副代表：齋藤 千裕</h2>
 
@@ -144,6 +159,40 @@
                     </div>
 
                 </div>
+
+                <hr>
+
+                <div id="event" class="p-5 bg-white">
+
+                    <h2 class="text-2xl text-left mb-5">イベント</h2>
+
+                    <img src="./images/programming.jpg" width="100%" alt="プログラミング もくもく作業会" class="my-5">
+
+                    <img src="./images/calligraphy.jpg" width="100%" alt="書道 心を整えよう！" class="my-5">
+
+                    <img src="./images/childrearing.jpg" width="100%" alt="子育て 親子でLINEスタンプを作ろう！" class="my-5">
+
+                    <p class="text-left">開催中のイベントは、Instagramで確認してください。</p>
+
+                    <a href="https://www.instagram.com/code4ichinomiya/" target="_blank">
+                        <img src="./images/instagram.jpg" width="100%" alt="Instagramアカウント @code4ichinomiya"
+                            class="my-5">
+                    </a>
+
+                    <h2 class="text-2xl text-left mb-5">活動場所</h2>
+
+                    <iframe src="./map.html" width="100%" height="450px" border="0"></iframe>
+
+                </div>
+
+                <div id="footer" class="p-5 bg-black text-white text-left mb-16">
+
+                    <p>Design and Code by <a href="https://hitoshi2s.netlify.app/" target="_blank">齋藤 仁志</a>.</p>
+
+                    <p class="mt-5">Build with Tailwind.</p>
+
+                </div>
+
             </div>
 
 
