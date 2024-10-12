@@ -68,6 +68,26 @@
             max-width: 700px;
         }
 
+        h2 {
+			font-size: 1.5em;
+			line-height: 1.5em;
+		}
+
+		h2::before {
+			content: attr(data-en);
+			display: block;
+			color: #498ee0;
+			font-size: 18px;
+		}
+
+		h2::after {
+			content: '';
+			display: block;
+			width: 40px;
+			height: 1px;
+			background-color: #498ee0;
+		}
+
         #top {
             background-color: rgba(81, 55, 67, 0.4);
         }
@@ -166,7 +186,7 @@
 
             <div id="overview" class="bg-white">
 
-                <h2 class="text-2xl text-left pt-5 ml-5">はじめに</h2>
+                <h2 data-en="Introduction" class="text-2xl text-left pt-5 ml-5">はじめに</h2>
 
                 <p class="pt-5 pl-7 pr-7 pb-3 text-left text-lg">
                     皆さんはシビックテック（CivicTech）をご存知ですか？市民（Civic）が自らデジタル技術（Tech）を用いて、地域課題（Region）を解決していく取り組みのことです。
@@ -184,13 +204,13 @@
 
                 <div id="member" class="p-5 bg-white text-zinc-600">
 
-                    <h2 class="text-2xl text-left mb-5">メンバー</h2>
+                    <h2 data-en="Member" class="text-2xl text-left mb-5">メンバー</h2>
 
                     <div class="flex flex-row mb-5">
 
                         <div class="text-left basis-2/3">
 
-                            <h2 class="text-2xl">代表：齋藤 仁志</h2>
+                            <h3 class="text-2xl">代表：齋藤 仁志</h3>
 
                             <p class="text-xs md:text-lg dual">
                                 【シビックテックの面白さを広めたい！】デジタル庁「デジタル推進委員」｜アプリ開発・データ可視化を軸に活動中｜オープンデータをフル活用｜行政とシビックテックの二刀流｜デジタルから世界を変えられるか？《受賞歴》UDCオープンガバメント協議会銀賞/PLATEAU賞/防災LOD賞/OSM賞
@@ -216,7 +236,7 @@
 
                         <div class="basis-2/3 mt-10 text-left ml-5">
 
-                            <h2 class="text-2xl">副代表：齋藤 千裕</h2>
+                            <h3 class="text-2xl">副代表：齋藤 千裕</h3>
 
                             <p class="text-xs md:text-lg calligraphy">【ビジョンを達成するスマイルプロジェクトをここから】
                                 健幸で仕事もプライベートも自己実現を| 中医学(漢方)を学び中 健康を体現する！スマイルプロジェクト 主宰| 理学療法士の国家資格保持｜書道準師範
@@ -234,7 +254,7 @@
 
                 <div id="event" class="p-5 bg-white">
 
-                    <h2 class="text-2xl text-left mb-5">イベント</h2>
+                    <h2 data-en="Event" class="text-2xl text-left mb-5">イベント</h2>
 
                     <img src="./images/programming.jpg" width="100%" alt="プログラミング もくもく作業会" class="my-5">
 
@@ -246,10 +266,12 @@
 
                     <a href="https://www.instagram.com/code4ichinomiya/" target="_blank">
                         <img src="./images/instagram.jpg" width="100%" alt="Instagramアカウント @code4ichinomiya"
-                            class="my-5">
+                            class="mt-5 mb-10">
                     </a>
 
-                    <h2 class="text-2xl text-left mb-5">活動場所</h2>
+                    <hr class="mt-5">
+
+                    <h2 data-en="Activity Place" class="text-2xl text-left my-5">活動場所</h2>
 
                     <iframe src="./map.html" width="100%" height="450px" border="0"></iframe>
 
