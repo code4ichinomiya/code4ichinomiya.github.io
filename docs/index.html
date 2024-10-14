@@ -22,15 +22,22 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-  <link rel="manifest" href="./manifest.json">
-  
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js').then(function() {
-        console.log('Service Worker Registered');
-      });
-    }
-  </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
+        integrity="sha512-uKQ39gEGiyUJl4AI6L+ekBdGKpGw4xJ55+xyJG7YFlJokPNYegn9KwQ3P8A7aFQAUtUsAQHep+d/lrGqrbPIDQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <link rel="manifest" href="./manifest.json">
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./service-worker.js').then(function () {
+                console.log('Service Worker Registered');
+            });
+        }
+    </script>
 
     <style>
         body {
@@ -151,6 +158,19 @@
                 width: 5rem;
             }
 
+        }
+
+        #link {
+            border-bottom: 1px dotted #498ee0;
+            padding-bottom: 3px;
+            color: #498ee0;
+        }
+
+        #link:after {
+            font-family: "Font Awesome 6 Free";
+            content: '\f35d';
+            font-weight: 900;
+            padding-left: 5px;
         }
 
         #footer p a {
@@ -274,6 +294,41 @@
                     <h2 data-en="Activity Place" class="text-2xl text-left my-5">活動場所</h2>
 
                     <iframe src="./map.html" width="100%" height="450px" border="0"></iframe>
+
+                    <hr class="mt-5">
+
+                    <h2 data-en="Application" class="text-2xl text-left my-5">開発したアプリ</h2>
+
+                    <div class="md:flex flex-row">
+
+                        <div class="text-center basis-1/3 mb-0">
+                            <a href="https://digital-globe.netlify.app/" target="_blank"><img
+                                    src="images/national-flag.jpg" id="image_border" class="mb-1" alt="デジタル地球儀画像"></a>
+                            <a href="https://digital-globe.netlify.app/" id="link" target="_blank">デジタル地球儀</a>
+                        </div>
+
+                        <div class="basis-2/3 mt-2 md:pl-5 md:mt-0 text-zinc-600 text-left">
+
+                            <p>世界の国々の首都や国旗、半島、山脈などをデジタル地球儀に載せてみました。日本が世界を基準に見ると何処に位置するのか、世界の国旗はどんなイメージなのか、など、地理教育などでご活用ください。
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="md:flex flex-row mt-5">
+
+                        <div class="text-center basis-1/3 mb-0">
+                            <a href="https://dpnote.netlify.app/" target="_blank"><img src="images/dpnote.jpg"
+                                    id="image_border" class="mb-1" alt="DPNoteサービス画像"></a>
+                            <a href="https://dpnote.netlify.app/" id="link" target="_blank">DP Note</a>
+                        </div>
+
+                        <div class="basis-2/3 mt-2 md:pl-5 md:mt-0 text-zinc-600 text-left">
+
+                            <p>防災に関する考察サービスです。災害データ可視化や防災図解を通して、防災に必要なものは何か？どのように次世代に語り継いでいくのかを考えていきます。</p>
+                        </div>
+                    </div>
+
 
                 </div>
 
