@@ -14,8 +14,7 @@
     <meta name="twitter:title" content="Code for Ichinomiya" />
     <meta name="twitter:image" content="https://code4ichinomiya.github.io/images/ogp.png" />
     <meta name="author" content="Saito Hitoshi">
-    <meta name="keywords"
-        content="Code for Ichinomiya,civictech,シビックテック,一宮市" />
+    <meta name="keywords" content="Code for Ichinomiya,civictech,シビックテック,一宮市" />
     <link rel="apple-touch-icon" href="./images/apple-touch-icon.jpg">
     <link rel="icon" href="./images/apple-touch-icon.jpg">
 
@@ -39,39 +38,14 @@
     </script>
 
     <style>
+        html,
         body {
-            font-family: "Meiryo", "Hiragino Maru Gothic Pro", sans-serif;
-            background-attachment: fixed;
-            background-image: url("./images/back.jpg");
-            background-position: top left;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-color: rgba(255, 255, 255, 0.2);
-            background-blend-mode: lighten;
-
-        }
-
-        /* iOS用  */
-        body::before {
-            content: "";
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            width: 100%;
-            height: 100vh;
-            background-repeat: no-repeat;
-            background-position: top center;
-            background-image: url("./images/back.jpg");
-            background-size: cover;
-            background-color: rgba(255, 255, 255, 0.2);
-            background-blend-mode: lighten;
+            font-family: "Source Han Serif JP", "Noto Serif CJK JP", "游明朝体", "Yu Mincho", YuMincho, serif;
         }
 
         .main {
             width: 100%;
-            max-width: 700px;
+            max-width: 800px;
         }
 
         h2 {
@@ -92,14 +66,6 @@
             width: 40px;
             height: 1px;
             background-color: #498ee0;
-        }
-
-        #top {
-            background-color: rgba(81, 55, 67, 0.4);
-        }
-
-        #top .theme {
-            border: 5px solid #bf783a;
         }
 
         .profile {
@@ -166,14 +132,6 @@
             color: #498ee0;
         }
 
-        #link:after,
-        .sns:after {
-            font-family: "Font Awesome 6 Free";
-            content: '\f35d';
-            font-weight: 900;
-            padding-left: 5px;
-        }
-
         #footer p a {
             border-bottom: 2px dotted #ffffff;
         }
@@ -185,194 +143,98 @@
 <body>
 
     <center>
-        <div class="main text-center">
+        <div class="main text-left">
 
-            <div id="top" class="text-white md:mt-16 px-5 pt-10 pb-5 text-center">
-                <center>
-                    <img src="./images/apple-touch-icon.jpg" class="rounded-full mb-5 w-52 md:w-60"
-                        alt="Code for Ichinomiya">
-                </center>
+            <h1 class="text-left text-2xl pl-5 mt-5 mb-10">Code for Ichinomiya</h1>
 
-                <h1 id="title" class="text-3xl pt-5 pb-5 mb-5">Code for Ichinomiya</h1>
+            <h2 data-en="Introduction" class="text-2xl text-left pt-5 ml-5">はじめに</h2>
 
-                <p class="mb-5 text-xl">育む（はぐくむ）<br>シビックテック</p>
+            <div class="md:flex flex-row pt-5 pl-5 px-5">
 
-                <center>
+                <div class="text-center basis-1/3 mb-0">
+                    <img src="./images/apple-touch-icon.jpg" class="rounded-full mb-5 w-52" alt="Code for Ichinomiya">
+                </div>
 
-                    <img src="./images/theme.jpg" alt="Code for Ichinomiya Theme" class="theme" width="70%">
+                <div class="basis-2/3 text-lg mt-2 md:pl-5 md:mt-0 text-zinc-600">
+                    <p class="mb-3">皆さんはシビックテック（CivicTech）をご存知ですか？市民（Civic）が自らデジタル技術（Tech）を用いて、地域課題を解決していく取り組みのことです。</p>
+                    <p>Code for Ichinomiyaは、愛知県一宮市にて、シビックテックの活動を行なっています。</p>
+                </div>
+            </div>
 
-                </center>
+            <div id="member" class="p-5 bg-white text-zinc-600">
+
+                <h2 data-en="Member" class="text-2xl text-left mb-5">メンバー</h2>
+
+                <div class="flex">
+                    <div class="w-64 flex-1 text-center border py-5 mr-3">
+
+                        <center>
+                        <img src="./images/profile1.jpg" class="profile w-52 p-3">
+                        </center>
+
+                        <h3 class="text-lg md:text-2xl mt-5">代表：齋藤 仁志</h3>
+
+                        <p class="text-sm md:text-lg dual">シビックテッカー、アプリ開発</p>
+
+                    </div>
+                    <div class="w-64 flex-1 text-center border py-5 ml-3">
+                        <center>
+                        <img src="./images/profile2.jpg" class="profile w-52 p-3">
+                    </center>
+
+                        <h3 class="text-lg md:text-2xl mt-5">副代表：齋藤 千裕</h3>
+
+                        <p class="text-sm md:text-lg calligraphy">書道家セラピスト、書道準師範</p>
+
+                    </div>
+                </div>
 
             </div>
 
-            <div id="overview" class="bg-white">
+            <div class="px-5 mt-5">
 
-                <h2 data-en="Introduction" class="text-2xl text-left pt-5 ml-5">はじめに</h2>
+                <h2 data-en="History" class="text-2xl text-left mb-5">活動履歴</h2>
 
-                <p class="pt-5 pl-7 pr-7 pb-3 text-left text-lg">
-                    皆さんはシビックテック（CivicTech）をご存知ですか？市民（Civic）が自らデジタル技術（Tech）を用いて、地域課題を解決していく取り組みのことです。
-                </p>
-                <p class="pt-3 pl-7 pr-7 pb-5 text-left text-lg">
-                    日本では、東日本大震災後、Code for Japanという団体が誕生したことがきっかけで、シビックテックの活動が増えています。
+                <p class="text-lg text-zinc-600">・2024年12月13日</p>
+                <p class="text-lg text-zinc-600">　オンライン雑談会開催</p>
 
-                </p>
+            </div>
 
-                <p class="pt-1 pl-7 pr-7 pb-7 text-left text-lg">
-                    Code for Ichinomiyaは、愛知県一宮市にて、シビックテックの活動を行なっています。
-                </p>
+            <div class="pl-5 text-lg my-5 text-zinc-600">
+                <span class="sns">
+                    <a href="https://www.instagram.com/code4ichinomiya/" target="_blank">Instagram</a>
+                </span>でも情報発信しています。
+            </div>
 
-                <hr>
+            <div id="question" class="pt-5 px-5 pb-16 bg-slate-500 text-white text-center">
 
-                <div id="member" class="p-5 bg-white text-zinc-600">
+                <h3 class="text-2xl pl-5 py-5"><i class="fa-regular fa-envelope"></i> お問い合わせ</h3>
 
-                    <h2 data-en="Member" class="text-2xl text-left mb-5">メンバー</h2>
+                <p class="pb-10 px-5">取材・講演の申し込み／お問い合わせは、下記より受け付けております。</p>
 
-                    <div class="flex flex-row mb-5">
+                <a href="https://forms.gle/D55A4c68oKSA9aGo7" target="_blank"
+                    class="border-2 border-white px-10 py-5">お問い合わせ</a>
 
-                        <div class="text-left basis-2/3">
+            </div>
 
-                            <h3 class="text-2xl">代表：齋藤 仁志</h3>
+            <div id="footer" class="p-5 bg-black text-white text-left">
 
-                            <p class="text-xs md:text-lg dual">
-                                【シビックテックの面白さを広めたい！】アプリ開発・データ可視化を軸に活動中｜オープンデータをフル活用｜デジタルから世界を変えられるか？《受賞歴》UDCオープンガバメント協議会銀賞/PLATEAU賞/防災LOD賞/OpenStreetMap賞
-                                etc.<span class="dual_s"><img src="./images/back_dual.jpg"></span></p>
+                <p class="mt-5">Design and Code by <a href="https://hitoshi2s.netlify.app/" target="_blank">齋藤
+                        仁志</a>.</p>
 
-                        </div>
+                <p class="mb-5">Build with Tailwind.</p>
 
-                        <div class="basis-1/3 mt-2">
+                <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" target="_blank"><img
+                        src="./images/license.jpg"></a>
 
-                            <img src="./images/profile1.jpg" class="profile">
+                <p class="my-5">このウェブサイトは、<a href="https://creativecommons.org/licenses/by/4.0/deed.ja"
+                        target="_blank">CC BY 4.0</a>のもと、公開しています.</p>
 
-                        </div>
+                <center>
 
-                    </div>
+                    <img src="./images/qr.jpg" class="my-5">
 
-                    <div class="flex flex-row mb-10">
-
-                        <div class="text-left mt-12 basis-1/3">
-
-                            <img src="./images/profile2.jpg" class="profile">
-
-                        </div>
-
-                        <div class="basis-2/3 mt-10 text-left ml-5">
-
-                            <h3 class="text-2xl">副代表：齋藤 千裕</h3>
-
-                            <p class="text-xs md:text-lg calligraphy">【ビジョンを達成するスマイルプロジェクトをここから】
-                                健幸で仕事もプライベートも自己実現を| 中医学(漢方)を学び中 健康を体現する！スマイルプロジェクト 主宰| 理学療法士の国家資格保持｜書道準師範
-                                書道セラピー作る　SDGs:3 | 家族と料理好き<span class="calligraphy_s"><img
-                                        src="./images/back_calligraphy.jpg"></span></p>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <hr>
-
-                <div id="event" class="p-5 bg-white">
-
-                    <h2 data-en="Event" class="text-2xl text-left mb-5">イベント</h2>
-
-                    <img src="./images/guinness.jpg" width="100%" alt="ギネス世界記録に挑戦！" class="my-5">
-
-                    <img src="./images/c4ibosai.jpg" width="100%" alt="C4I防災プロジェクト" class="my-5">
-
-                    <img src="./images/calligraphy.jpg" width="100%" alt="書道 心を整えよう！" class="my-5">
-
-                    <hr class="mt-5">
-
-                    <h2 data-en="Social Network Service" class="text-2xl text-left my-5">SNS</h2>
-
-                    <div class="text-left">
-                        <span class="sns">
-                            <a href="https://www.instagram.com/code4ichinomiya/" target="_blank">Instagram</a>
-                        </span>
-                    </div>
-
-                    <hr class="mt-5">
-
-                    <h2 data-en="Activity Place" class="text-2xl text-left my-5">活動場所</h2>
-
-主にオンライン（Slackなど）をベースに活動しています。オフライン（現地参加）では、尾張一宮駅前ビルのワーキングスペースを活用する予定です。
-
-                    <iframe src="./map.html" width="100%" height="450px" border="0"></iframe>
-
-                    <hr class="mt-5">
-
-                    <h2 data-en="Application" class="text-2xl text-left my-5">開発したアプリ</h2>
-
-                    <div class="md:flex flex-row">
-
-                        <div class="text-center basis-1/3 mb-0">
-                            <a href="https://digital-globe.netlify.app/" target="_blank"><img
-                                    src="images/national-flag.jpg" id="image_border" class="mb-1" alt="デジタル地球儀画像"></a>
-                            <a href="https://digital-globe.netlify.app/" id="link" target="_blank">デジタル地球儀</a>
-                        </div>
-
-                        <div class="basis-2/3 mt-2 md:pl-5 md:mt-0 text-zinc-600 text-left">
-
-                            <p>世界の国々の首都や国旗、半島、山脈などをデジタル地球儀に載せてみました。日本が世界を基準に見ると何処に位置するのか、世界の国旗はどんなイメージなのか、など、地理教育などでご活用ください。
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <div class="md:flex flex-row mt-5">
-
-                        <div class="text-center basis-1/3 mb-0">
-                            <a href="https://dpnote.netlify.app/" target="_blank"><img src="images/dpnote.jpg"
-                                    id="image_border" class="mb-1" alt="DPNoteサービス画像"></a>
-                            <a href="https://dpnote.netlify.app/" id="link" target="_blank">DP Note</a>
-                        </div>
-
-                        <div class="basis-2/3 mt-2 md:pl-5 md:mt-0 text-zinc-600 text-left">
-
-                            <p>防災に関する考察サービスです。災害データ可視化や防災図解を通して、防災に必要なものは何か？どのように次世代に語り継いでいくのかを考えていきます。</p>
-                        </div>
-                    </div>
-
-
-                </div>
-
-                <div id="question" class="pt-5 px-5 pb-16 bg-slate-500 text-white text-center">
-
-                    <h3 class="text-2xl pl-5 py-5"><i class="fa-regular fa-envelope"></i> お問い合わせ</h3>
-
-                    <p class="pb-10 px-5">取材・講演の申し込み／お問い合わせは、下記より受け付けております。</p>
-
-                    <a href="https://forms.gle/D55A4c68oKSA9aGo7" target="_blank"
-                        class="border-2 border-white px-10 py-5">お問い合わせ</a>
-
-                </div>
-
-                <div id="footer" class="p-5 bg-black text-white text-left md:mb-16">
-
-                    <p class="my-5">このウェブサイトの背景画像とOGP画像は、以下の著作物を改変して利用しています。</p>
-
-                    <p class="mt-5">【１３８タワーパーク]、一宮市、CC BY 4.0</p>
-
-                    <p class="mt-5">Design and Code by <a href="https://hitoshi2s.netlify.app/" target="_blank">齋藤
-                            仁志</a>.</p>
-
-                    <p class="my-5">Build with Tailwind.</p>
-
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" target="_blank"><img
-                            src="./images/license.jpg"></a>
-
-                    <p class="my-5">このウェブサイトは、<a href="https://creativecommons.org/licenses/by/4.0/deed.ja"
-                            target="_blank">CC BY 4.0</a>のもと、公開しています.</p>
-
-                    <center>
-
-                        <img src="./images/qr.jpg" class="my-5">
-
-                    </center>
-
-                </div>
+                </center>
 
             </div>
 
