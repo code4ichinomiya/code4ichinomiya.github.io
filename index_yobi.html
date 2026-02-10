@@ -1,396 +1,71 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="ja">
-<title>Code for Ichinomiya</title>
+<head>
+<meta charset="utf-8">
+<title>擬似AR水族館</title>
 
-<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
-    <meta charset="UTF-8" name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta property="og:title" content="Code for Ichinomiya" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://code4ichinomiya.github.io/images/ogp.png" />
-    <meta name="description" content="Code for Ichinomiyaのオフィシャルウェブサイトです。愛知県一宮市を中心にシビックテックの活動をしています。" />
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Code for Ichinomiya" />
-    <meta name="twitter:image" content="https://code4ichinomiya.github.io/images/ogp.png" />
-    <meta name="author" content="Saito Hitoshi">
-    <meta name="keywords"
-        content="Code for Ichinomiya,civictech,シビックテック,一宮市" />
-    <link rel="apple-touch-icon" href="./images/apple-touch-icon.jpg">
-    <link rel="icon" href="./images/apple-touch-icon.jpg">
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { margin: 0; overflow: hidden; }
+</style>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
-        integrity="sha512-uKQ39gEGiyUJl4AI6L+ekBdGKpGw4xJ55+xyJG7YFlJokPNYegn9KwQ3P8A7aFQAUtUsAQHep+d/lrGqrbPIDQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+/* ゆらゆら動く */
+AFRAME.registerComponent('float', {
+  schema: {
+    speed: {default: 1},
+    height:{default: 0.2}
+  },
+  tick: function (time) {
+    const y = Math.sin(time / 1000 * this.data.speed) * this.data.height;
+    this.el.object3D.position.y = y;
+  }
+});
 
-    <link rel="manifest" href="./manifest.json">
-
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./service-worker.js').then(function () {
-                console.log('Service Worker Registered');
-            });
-        }
-    </script>
-
-    <style>
-        body {
-            font-family: "Meiryo", "Hiragino Maru Gothic Pro", sans-serif;
-            background-attachment: fixed;
-            background-image: url("./images/back.jpg");
-            background-position: top left;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-color: rgba(255, 255, 255, 0.2);
-            background-blend-mode: lighten;
-
-        }
-
-        /* iOS用  */
-        body::before {
-            content: "";
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            width: 100%;
-            height: 100vh;
-            background-repeat: no-repeat;
-            background-position: top center;
-            background-image: url("./images/back.jpg");
-            background-size: cover;
-            background-color: rgba(255, 255, 255, 0.2);
-            background-blend-mode: lighten;
-        }
-
-        .main {
-            width: 100%;
-            max-width: 700px;
-        }
-
-        h2 {
-            font-size: 1.5em;
-            line-height: 1.5em;
-        }
-
-        h2::before {
-            content: attr(data-en);
-            display: block;
-            color: #498ee0;
-            font-size: 18px;
-        }
-
-        h2::after {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 1px;
-            background-color: #498ee0;
-        }
-
-        #top {
-            background-color: rgba(81, 55, 67, 0.4);
-        }
-
-        #top .theme {
-            border: 5px solid #bf783a;
-        }
-
-        .profile {
-            border-radius: 100%;
-        }
-
-        .dual {
-            position: relative;
-        }
-
-        .dual_s {
-            position: absolute;
-            left: .5rem;
-            bottom: -3.5rem;
-            opacity: 0.2;
-
-        }
-
-        .dual_s img {
-            width: 10rem;
-        }
-
-        .calligraphy {
-            position: relative;
-        }
-
-        .calligraphy_s {
-            position: absolute;
-            right: .5rem;
-            bottom: -3.5rem;
-            opacity: 0.2;
-
-        }
-
-        .calligraphy_s img {
-            width: 8rem;
-        }
-
-        @media screen and (max-width: 767px) {
-
-            .dual_s {
-                bottom: -2.5rem;
-            }
-
-            .dual_s img {
-                width: 7rem;
-            }
-
-
-            .calligraphy_s {
-                bottom: -1.5rem;
-            }
-
-            .calligraphy_s img {
-                width: 5rem;
-            }
-
-        }
-
-        #link,
-        .sns {
-            border-bottom: 1px dotted #498ee0;
-            padding-bottom: 3px;
-            color: #498ee0;
-        }
-
-        #link:after,
-        .sns:after {
-            font-family: "Font Awesome 6 Free";
-            content: '\f35d';
-            font-weight: 900;
-            padding-left: 5px;
-        }
-
-        #footer p a {
-            border-bottom: 2px dotted #ffffff;
-        }
-    </style>
-
-
+/* 横に泳ぐ */
+AFRAME.registerComponent('swim', {
+  schema: {
+    speed: {default: 0.0004}
+  },
+  tick: function (time, delta) {
+    this.el.object3D.position.x += this.data.speed * delta;
+    if (this.el.object3D.position.x > 1.6) {
+      this.el.object3D.position.x = -1.6;
+    }
+  }
+});
+</script>
 </head>
 
 <body>
 
-    <center>
-        <div class="main text-center">
+<a-scene embedded>
+
+  <!-- 海の背景 -->
+  <a-sky src="images/back.jpg" rotation="0 -90 0"></a-sky>
+
+  <!-- 子どもの魚 -->
+  <a-image
+    src="images/ogp.png"
+    position="-1 0 -2"
+    scale="0.7 0.7 0.7"
+    float="speed:1.2"
+    swim>
+  </a-image>
+
+  <a-image
+    src="images/ogp.png"
+    position="0.5 0.5 -2"
+    scale="0.6 0.6 0.6"
+    float="speed:0.8"
+    swim="speed:0.0002">
+  </a-image>
+
+  <!-- カメラ -->
+  <a-entity camera look-controls></a-entity>
+
+</a-scene>
 
-            <div id="top" class="text-white md:mt-16 px-5 pt-10 pb-5 text-center">
-                <center>
-                    <img src="./images/apple-touch-icon.jpg" class="rounded-full mb-5 w-52 md:w-60"
-                        alt="Code for Ichinomiya">
-                </center>
-
-                <h1 id="title" class="text-3xl pt-5 pb-5 mb-5">Code for Ichinomiya</h1>
-
-                <p class="mb-5 text-xl">育む（はぐくむ）<br>シビックテック</p>
-
-                <center>
-
-                    <img src="./images/theme.jpg" alt="Code for Ichinomiya Theme" class="theme" width="70%">
-
-                </center>
-
-            </div>
-
-            <div id="overview" class="bg-white">
-
-                <h2 data-en="Introduction" class="text-2xl text-left pt-5 ml-5">はじめに</h2>
-
-                <p class="pt-5 pl-7 pr-7 pb-3 text-left text-lg">
-                    皆さんはシビックテック（CivicTech）をご存知ですか？市民（Civic）が自らデジタル技術（Tech）を用いて、地域課題を解決していく取り組みのことです。
-                </p>
-                <p class="pt-3 pl-7 pr-7 pb-5 text-left text-lg">
-                    日本では、東日本大震災後、Code for Japanという団体が誕生したことがきっかけで、シビックテックの活動が増えています。
-
-                </p>
-
-                <p class="pt-1 pl-7 pr-7 pb-7 text-left text-lg">
-                    Code for Ichinomiyaは、愛知県一宮市にて、シビックテックの活動を行なっています。
-                </p>
-
-                <hr>
-
-                <div id="member" class="p-5 bg-white text-zinc-600">
-
-                    <h2 data-en="Member" class="text-2xl text-left mb-5">メンバー</h2>
-
-                    <div class="flex flex-row mb-5">
-
-                        <div class="text-left basis-2/3">
-
-                            <h3 class="text-2xl">代表：齋藤 仁志</h3>
-
-                            <p class="text-xs md:text-lg dual">
-                                【シビックテックの面白さを広めたい！】アプリ開発・データ可視化を軸に活動中｜オープンデータをフル活用｜デジタルから世界を変えられるか？《受賞歴》UDCオープンガバメント協議会銀賞/PLATEAU賞/防災LOD賞/OpenStreetMap賞
-                                etc.<span class="dual_s"><img src="./images/back_dual.jpg"></span></p>
-
-                        </div>
-
-                        <div class="basis-1/3 mt-2">
-
-                            <img src="./images/profile1.jpg" class="profile">
-
-                        </div>
-
-                    </div>
-
-                    <div class="flex flex-row mb-10">
-
-                        <div class="text-left mt-12 basis-1/3">
-
-                            <img src="./images/profile2.jpg" class="profile">
-
-                        </div>
-
-                        <div class="basis-2/3 mt-10 text-left ml-5">
-
-                            <h3 class="text-2xl">副代表：齋藤 千裕</h3>
-
-                            <p class="text-xs md:text-lg calligraphy">【ビジョンを達成するスマイルプロジェクトをここから】
-                                健幸で仕事もプライベートも自己実現を| 中医学(漢方)を学び中 健康を体現する！スマイルプロジェクト 主宰| 理学療法士の国家資格保持｜書道準師範
-                                書道セラピー作る　SDGs:3 | 家族と料理好き<span class="calligraphy_s"><img
-                                        src="./images/back_calligraphy.jpg"></span></p>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <hr>
-
-                <div id="event" class="p-5 bg-white">
-
-                    <h2 data-en="Event" class="text-2xl text-left mb-5">イベント</h2>
-
-                    <img src="./images/guinness.jpg" width="100%" alt="ギネス世界記録に挑戦！" class="my-5">
-
-                    <img src="./images/c4ibosai.jpg" width="100%" alt="C4I防災プロジェクト" class="my-5">
-
-                    <img src="./images/calligraphy.jpg" width="100%" alt="書道 心を整えよう！" class="my-5">
-
-                    <hr class="mt-5">
-
-                    <h2 data-en="Social Network Service" class="text-2xl text-left my-5">SNS</h2>
-
-                    <div class="text-left">
-                        <span class="sns">
-                            <a href="https://www.instagram.com/code4ichinomiya/" target="_blank">Instagram</a>
-                        </span>
-                    </div>
-
-                    <hr class="mt-5">
-
-                    <h2 data-en="Activity Place" class="text-2xl text-left my-5">活動場所</h2>
-
-<p class="py-5 text-left text-lg">主にオンライン（Slackなど）をベースに活動しています。オフライン（現地参加）では、尾張一宮駅前ビルのワーキングスペースを活用する予定です。</p>
-
-                    <iframe src="./map.html" width="100%" height="450px" border="0"></iframe>
-
-                    <hr class="mt-5">
-
-                    <h2 data-en="Application" class="text-2xl text-left my-5">開発したアプリ</h2>
-
-                    <div class="md:flex flex-row">
-
-                        <div class="text-center basis-1/3 mb-0">
-                            <a href="https://digital-globe.netlify.app/" target="_blank"><img
-                                    src="images/national-flag.jpg" id="image_border" class="mb-1" alt="デジタル地球儀画像"></a>
-                            <a href="https://digital-globe.netlify.app/" id="link" target="_blank">デジタル地球儀</a>
-                        </div>
-
-                        <div class="basis-2/3 mt-2 md:pl-5 md:mt-0 text-zinc-600 text-left">
-
-                            <p>世界の国々の首都や国旗、半島、山脈などをデジタル地球儀に載せてみました。日本が世界を基準に見ると何処に位置するのか、世界の国旗はどんなイメージなのか、など、地理教育などでご活用ください。
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <div class="md:flex flex-row mt-5">
-
-                        <div class="text-center basis-1/3 mb-0">
-                            <a href="https://dpnote.netlify.app/" target="_blank"><img src="images/dpnote.jpg"
-                                    id="image_border" class="mb-1" alt="DPNoteサービス画像"></a>
-                            <a href="https://dpnote.netlify.app/" id="link" target="_blank">DP Note</a>
-                        </div>
-
-                        <div class="basis-2/3 mt-2 md:pl-5 md:mt-0 text-zinc-600 text-left">
-
-                            <p>防災に関する考察サービスです。災害データ可視化や防災図解を通して、防災に必要なものは何か？どのように次世代に語り継いでいくのかを考えていきます。</p>
-                        </div>
-                    </div>
-
-
-                </div>
-
-                <div id="question" class="pt-5 px-5 pb-16 bg-slate-500 text-white text-center">
-
-                    <h3 class="text-2xl pl-5 py-5"><i class="fa-regular fa-envelope"></i> お問い合わせ</h3>
-
-                    <p class="pb-10 px-5">取材・講演の申し込み／お問い合わせは、下記より受け付けております。</p>
-
-                    <a href="https://forms.gle/D55A4c68oKSA9aGo7" target="_blank"
-                        class="border-2 border-white px-10 py-5">お問い合わせ</a>
-
-                </div>
-
-                <div id="footer" class="p-5 bg-black text-white text-left md:mb-16">
-
-                    <p class="my-5">このウェブサイトの背景画像とOGP画像は、以下の著作物を改変して利用しています。</p>
-
-                    <p class="mt-5">【１３８タワーパーク]、一宮市、CC BY 4.0</p>
-
-                    <p class="mt-5">Design and Code by <a href="https://hitoshi2s.netlify.app/" target="_blank">齋藤
-                            仁志</a>.</p>
-
-                    <p class="my-5">Build with Tailwind.</p>
-
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" target="_blank"><img
-                            src="./images/license.jpg"></a>
-
-                    <p class="my-5">このウェブサイトは、<a href="https://creativecommons.org/licenses/by/4.0/deed.ja"
-                            target="_blank">CC BY 4.0</a>のもと、公開しています.</p>
-
-                    <center>
-
-                        <img src="./images/qr.jpg" class="my-5">
-
-                    </center>
-
-                </div>
-
-            </div>
-
-
-        </div>
-    </center>
-
-
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MPP84V2NHB"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-MPP84V2NHB');
-    </script>
 </body>
-
 </html>
