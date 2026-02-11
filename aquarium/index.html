@@ -1,155 +1,96 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
-<title>AR Aquarium (AR水族館)</title>
+<!DOCTYPE HTML>
+<html lang="ja">
+<title>AR水族館</title>
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <meta charset="UTF-8" name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta property="og:title" content="AR水族館" />
+    <meta property="og:url" content="https://code4ichinomiya.github.io/aquarium/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://code4ichinomiya.github.io/aquarium/ogp.png" />
+    <meta name="description" content="AR水族館です。好きな画像を魚のように動かすことができます。" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AR水族館" />
+    <meta name="twitter:image" content="https://code4ichinomiya.github.io/aquarium/ogp.png" />
+    <meta name="author" content="Saito Hitoshi">
+    <meta name="keywords" content="AR, 水族館, AR水族館" />
+    <link rel="apple-touch-icon" href="./images/apple-touch-icon.png">
+    <link rel="icon" href="./images/apple-touch-icon.png">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Source Han Serif JP", "Noto Serif CJK JP", "游明朝体", "Yu Mincho", YuMincho, serif;
+        }
+
+        h1 {
+            position: fixed;
+            z-index: 999;
+            background: rgba(0, 0, 0, .5);
+            color: #ffffff;
+        }
+    </style>
+
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+    <script>
+        AFRAME.registerComponent('float', {
+            tick: function (time) {
+                this.el.object3D.position.y =
+                    Math.sin(time / 1000) * 0.8;
+            }
+        });
+
+        AFRAME.registerComponent('swim', {
+            tick: function (time, delta) {
+                this.el.object3D.position.x -= 0.0004 * delta;
+                if (this.el.object3D.position.x < -5) {
+                    this.el.object3D.position.x = 5;
+                }
+            }
+        });
+    </script>
 </head>
+
 <body>
 
-<header>
-	<h1>AR水族館</h1>
-</header>
+    <h1 class="mt-5 ml-5 text-2xl p-5">AR水族館</h1>
 
-<script type="module">
-import { THREE, scene, camera, renderer } from "https://code4fukui.github.io/egxr.js/egxr.js";
-import { CSV } from "https://js.sabae.cc/CSV.js";
+    <a-scene>
 
-// fishurl
-const params = new URL(document.location).searchParams;
-const url = params.get("url") ?? "./fishes.csv";
-const nfishes = params.get("nfishes") ?? 30;
-const dtrefresh = params.get("dtrefresh") ?? 0;
+        <!-- ⭐ 画像を先に読み込む -->
+        <a-assets>
+            <img id="sea" src="back.jpg">
+            <img id="fish1" src="fish1.png">
+            <img id="fish2" src="fish2.png">
+        </a-assets>
 
-const fetchFishes = async () => {
-	const fetchList = async () => {
-		if (url.endsWith(".csv")) {
-			return await CSV.fetchJSON(url + "?" + new Date().getTime());
-		} else { // json
-			return await (await fetch(url)).json();
-		}
-	};
-	const list = await fetchList();
-	const res = list.filter(i => i.enabled === undefined || i.enabled == "1");
-	console.log(res.length);
-	return res;
-};
+        <!-- 海 -->
+        <a-sky src="#sea"></a-sky>
 
-const loadTextureAsync = async (url) => {
-  return new Promise((resolve, reject) => {
-    const loader = new THREE.TextureLoader();
-    loader.load(
-      url,
-      texture => resolve(texture),
-      undefined,
-      error => reject(error),
-    );
-  });
-};
+        <!-- 魚 -->
+        <a-image src="#fish1" position="-1 0 -2" float swim></a-image>
+        <a-image src="#fish2" position="1 0.5 -3" float swim></a-image>
 
-const makeFish = async (options) => {
-	// テクスチャー読み込み
-	const textureLoader = new THREE.TextureLoader();
-	//const texture = textureLoader.load(options.file);
-	const texture = await loadTextureAsync(options.file);
-	//const fish1aspect = options.height / options.width;
-	const fish1aspect = texture.image.height / texture.image.width;
-	
-	// 平面ジオメトリの生成
-	const sw = 8;
-	const size = options.size;
-	const planeGeometry = new THREE.PlaneGeometry(size, size * fish1aspect, sw, 1);
-	const material = new THREE.MeshBasicMaterial({
-		map: texture,
-		transparent: true,
-		side: THREE.DoubleSide,
-		//color: 0xFF0000, wireframe: true,
-	});
-	const mesh = new THREE.Mesh(planeGeometry, material);
-	mesh.animate = (t) => {
-		// メッシュのジオメトリをリアルタイムで変更
-		const p = mesh.geometry.attributes.position;
-		const a = p.array;
-		for (let i = 0; i <= sw; i++) {
-			const z = Math.cos(t / 100 + i * options.freq) * options.amp;
-			a[2 + i * 3] = z;
-			a[2 + i * 3 + (sw + 1) * 3] = z;
-		}
-		p.needsUpdate = true;
+        <a-entity camera look-controls></a-entity>
 
-		// 場所設定
-		const th = mesh.th + t * options.speed / 1000;
-		mesh.position.x = Math.cos(th) * mesh.r;
-		mesh.position.z = Math.sin(th) * mesh.r;
-		mesh.rotation.y = Math.atan2(mesh.position.x, mesh.position.z) - Math.PI;
-	};
-	// 初期位置
-	const basey = -1.2;
-	mesh.position.y = options.type == "walk" ? basey : Math.random() * 2.5 + basey;
-	mesh.r = Math.random() * 3 + .5;
-	mesh.th = Math.random() * Math.PI * 2;
-	mesh.data = options;
-	return mesh;
-};
+    </a-scene>
 
-// fishes
-
-if (dtrefresh) {
-	setInterval(async () => {
-		await updateFishes();
-		console.log("updated", fishes.length);
-	}, dtrefresh * 1000);
-}
-
-const fishes = [];
-
-let bkfishesdata = [];
-const updateFishes = async () => {
-	const fishesdata = await fetchFishes();
-	for (let i = 0; i < fishes.length; i++) {
-		const fish = fishes[i];
-		if (!fish) continue;
-		if (!fishesdata.find(i => i.file == fish.data.file)) {
-			scene.remove(fish);
-			fishes[i] = null;
-			console.log("remove " + fish);
-		}
-	}
-	for (const d of fishesdata) {
-		if (!fishes.find(i => i && i.data.file == d.file)) {
-			const fish = await makeFish(d);
-			scene.add(fish);
-			const spc = fishes.find(i => !i);
-			if (spc) {
-				fishes[spc] = fish;
-			} else {
-				fishes.push(fish);
-			}
-			console.log("add " + fish);
-		}
-	}
-};
-
-const initFishes = async () => {
-	const fishesdata = await fetchFishes();
-	const len = nfishes > 0 ? nfishes : fishesdata.length;
-	for (let i = 0; i < len; i++) {
-		const d = fishesdata[i % fishesdata.length];
-		const fish = await makeFish(d);
-		scene.add(fish);
-		fishes.push(fish);
-	}
-};
-
-const t0 = performance.now();
-renderer.setAnimationLoop(() => {
-	const t = t0 - performance.now();
-	for (const fish of fishes) {
-		if (fish && fish.animate) {
-			fish.animate(t);
-		}
-	}
-	renderer.render(scene, camera);
-});
-
-await initFishes();
-
-</script>
 </body>
+
 </html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
+<title>AR Aquarium (AR水族館)</title>
+</head>
+<body>
+
+<header>
+	<h1>AR水族館</h1>
+</header>
+
+<script type="module">
+import { THREE, scene, camera, renderer } from "https://code4fukui.github.io/egxr.js/egxr.js";
+import { CSV } from "https://js.sabae.cc/CSV.js";
+
+// fishurl
+const params = new URL(document.location).searchParams;
+const url = params.get("url") ?? "./fishes.csv";
+const nfishes = params.get("nfishes") ?? 30;
+const dtrefresh = params.get("dtrefresh") ?? 0;
+
+const fetchFishes = async () => {
+	const fetchList = async () => {
+		if (url.endsWith(".csv")) {
+			return await CSV.fetchJSON(url + "?" + new Date().getTime());
+		} else { // json
+			return await (await fetch(url)).json();
+		}
+	};
+	const list = await fetchList();
+	const res = list.filter(i => i.enabled === undefined || i.enabled == "1");
+	console.log(res.length);
+	return res;
+};
+
+const loadTextureAsync = async (url) => {
+  return new Promise((resolve, reject) => {
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      url,
+      texture => resolve(texture),
+      undefined,
+      error => reject(error),
+    );
+  });
+};
+
+const makeFish = async (options) => {
+	// テクスチャー読み込み
+	const textureLoader = new THREE.TextureLoader();
+	//const texture = textureLoader.load(options.file);
+	const texture = await loadTextureAsync(options.file);
+	//const fish1aspect = options.height / options.width;
+	const fish1aspect = texture.image.height / texture.image.width;
+	
+	// 平面ジオメトリの生成
+	const sw = 8;
+	const size = options.size;
+	const planeGeometry = new THREE.PlaneGeometry(size, size * fish1aspect, sw, 1);
+	const material = new THREE.MeshBasicMaterial({
+		map: texture,
+		transparent: true,
+		side: THREE.DoubleSide,
+		//color: 0xFF0000, wireframe: true,
+	});
+	const mesh = new THREE.Mesh(planeGeometry, material);
+	mesh.animate = (t) => {
+		// メッシュのジオメトリをリアルタイムで変更
+		const p = mesh.geometry.attributes.position;
+		const a = p.array;
+		for (let i = 0; i <= sw; i++) {
+			const z = Math.cos(t / 100 + i * options.freq) * options.amp;
+			a[2 + i * 3] = z;
+			a[2 + i * 3 + (sw + 1) * 3] = z;
+		}
+		p.needsUpdate = true;
+
+		// 場所設定
+		const th = mesh.th + t * options.speed / 1000;
+		mesh.position.x = Math.cos(th) * mesh.r;
+		mesh.position.z = Math.sin(th) * mesh.r;
+		mesh.rotation.y = Math.atan2(mesh.position.x, mesh.position.z) - Math.PI;
+	};
+	// 初期位置
+	const basey = -1.2;
+	mesh.position.y = options.type == "walk" ? basey : Math.random() * 2.5 + basey;
+	mesh.r = Math.random() * 3 + .5;
+	mesh.th = Math.random() * Math.PI * 2;
+	mesh.data = options;
+	return mesh;
+};
+
+// fishes
+
+if (dtrefresh) {
+	setInterval(async () => {
+		await updateFishes();
+		console.log("updated", fishes.length);
+	}, dtrefresh * 1000);
+}
+
+const fishes = [];
+
+let bkfishesdata = [];
+const updateFishes = async () => {
+	const fishesdata = await fetchFishes();
+	for (let i = 0; i < fishes.length; i++) {
+		const fish = fishes[i];
+		if (!fish) continue;
+		if (!fishesdata.find(i => i.file == fish.data.file)) {
+			scene.remove(fish);
+			fishes[i] = null;
+			console.log("remove " + fish);
+		}
+	}
+	for (const d of fishesdata) {
+		if (!fishes.find(i => i && i.data.file == d.file)) {
+			const fish = await makeFish(d);
+			scene.add(fish);
+			const spc = fishes.find(i => !i);
+			if (spc) {
+				fishes[spc] = fish;
+			} else {
+				fishes.push(fish);
+			}
+			console.log("add " + fish);
+		}
+	}
+};
+
+const initFishes = async () => {
+	const fishesdata = await fetchFishes();
+	const len = nfishes > 0 ? nfishes : fishesdata.length;
+	for (let i = 0; i < len; i++) {
+		const d = fishesdata[i % fishesdata.length];
+		const fish = await makeFish(d);
+		scene.add(fish);
+		fishes.push(fish);
+	}
+};
+
+const t0 = performance.now();
+renderer.setAnimationLoop(() => {
+	const t = t0 - performance.now();
+	for (const fish of fishes) {
+		if (fish && fish.animate) {
+			fish.animate(t);
+		}
+	}
+	renderer.render(scene, camera);
+});
+
+await initFishes();
+
+</script>
+</body>
+</html>
