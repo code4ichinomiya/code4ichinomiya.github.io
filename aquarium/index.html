@@ -69,11 +69,9 @@
 
 <body>
 
-    <h1 class="mt-5 ml-5 text-2xl p-5">AR水族館</h1>
-
     <a-scene>
 
-        <!-- ⭐ 画像を先に読み込む -->
+        <!-- 画像を先に読み込む -->
         <a-assets>
             <img id="sea" src="back.jpg">
             <img id="fish1" src="fish1.png">
@@ -87,7 +85,7 @@
         <a-image src="#fish1" position="-1 0 -2" float swim></a-image>
         <a-image src="#fish2" position="1 0.5 -3" float swim></a-image>
 
-        <a-entity camera></a-entity>
+        <a-entity camera look-controls></a-entity>
 
     </a-scene>
 
