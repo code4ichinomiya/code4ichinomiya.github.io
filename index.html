@@ -75,7 +75,7 @@
         .main {
             width: 100%;
             max-width: 800px;
-            background: rgba(255,255,255,.9);
+            background: rgba(255, 255, 255, .75);
         }
 
         h2 {
@@ -98,7 +98,12 @@
             background-color: #498ee0;
         }
 
-        .member, #image_border {
+        #top_image{
+            border: 1px solid #e7e7eb;
+        }
+
+        .member,
+        #image_border {
             border: 1px solid #000000;
         }
 
@@ -183,18 +188,22 @@
 
             <h2 data-en="Introduction" class="text-2xl text-left pt-3 ml-5">はじめに</h2>
 
-            <div class="md:flex flex-row pt-5 pl-5 px-5">
+            <div class="md:flex flex-row pt-5 px-5">
 
-                <div class="basis-1/3 mb-0">
-                    <img src="./images/apple-touch-icon.jpg" class="rounded-full mb-5 w-52" alt="Code for Ichinomiya">
+                <!-- 画像部分 -->
+                <div class="basis-1/3 mb-0 flex justify-center md:block">
+                    <img src="./images/apple-touch-icon.jpg" id = "top_image" class="rounded-full mb-5 w-52" alt="Code for Ichinomiya">
                 </div>
 
+                <!-- テキスト部分 -->
                 <div class="basis-2/3 text-lg mt-2 md:pl-5 md:mt-0 text-zinc-600">
                     <p class="mb-3">皆さんはシビックテック（CivicTech）をご存知ですか？</p>
                     <p class="mb-3">シビックテックとは、市民（Civic）が自らデジタル技術（Tech）を用いて、地域課題を解決していく取り組みのことです。</p>
                     <p>Code for Ichinomiyaは、愛知県一宮市にて、シビックテックの活動を行なっています。</p>
                 </div>
+
             </div>
+
 
             <div id="member" class="p-5 text-zinc-600">
 
@@ -238,7 +247,8 @@
 
                 <div class="md:flex flex-row mb-10">
                     <div class="text-center basis-1/3 mb-0">
-                        <a href="https://s.roomiq.jp/YQT7xKQ" target="_blank"><img src="images/calligraphy_vr.jpg" id="image_border" class="mb-1" alt="バーチャル書道展"></a>
+                        <a href="https://s.roomiq.jp/YQT7xKQ" target="_blank"><img src="images/calligraphy_vr.jpg"
+                                id="image_border" class="mb-1" alt="バーチャル書道展"></a>
                     </div>
 
                     <div class="basis-2/3 mt-2 md:pl-5 md:mt-0 text-zinc-600 text-lg">
