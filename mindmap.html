@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>入力グラフ</title>
+
+<!-- グラフライブラリ -->
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+<style>
+body {
+  font-family: sans-serif;
+  margin: 20px;
+}
+
+#network {
+  width: 100%;
+  height: 500px;
+  border: 1px solid #ccc;
+}
+
+textarea {
+  width: 100%;
+  height: 120px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>関係入力グラフ</h2>
+
+<p>「A,B」の形式で入力してください</p>
+
+<textarea id="input">
+鯖,海水魚
+鮎,淡水魚
+鯨,哺乳類
+鯖,10画
+</textarea>
+
+<br><br>
+<button onclick="drawGraph()">グラフ表示</button>
+
+<div id="network"></div>
+
+<script>
+function drawGraph() {
+  const text = document.getElementById("input").value;
+  const lines = text.split("\n");
+
+  let nodes = new Map();
+  let edges = [];
+
+  lines.forEach(line => {
+    const parts = line.split(",");
+    if (parts.length !== 2) return;
+
+    const from = parts[0].trim();
+    const to = parts[1].trim();
+
+    // ノード登録（重複防止）
+    if (!nodes.has(from)) nodes.set(from, { id: from, label: from });
+    if (!nodes.has(to)) nodes.set(to, { id: to, label: to });
+
+    edges.push({ from: from, to: to });
+  });
+
+  const container = document.getElementById("network");
+
+  const data = {
+    nodes: Array.from(nodes.values()),
+    edges: edges
+  };
+
+  const options = {
+    physics: {
+      enabled: true
+    }
+  };
+
+  new vis.Network(container, data, options);
+}
+
+// 初回表示
+drawGraph();
+</script>
+
+</body>
+</html>
