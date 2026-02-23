@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>AR水族館</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+/* ===== 背景 ===== */
+body {
+  overflow: hidden;
+}
+
+/* ===== 泡コンテナ ===== */
+.bubbles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* ===== 泡 ===== */
+.bubble {
+  position: absolute;
+  bottom: -100px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  animation: rise linear infinite;
+}
+
+/* 上に上がるアニメーション */
+@keyframes rise {
+  from {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  to {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body class="bg-gradient-to-b from-blue-300 to-blue-600 min-h-screen flex items-center justify-center">
+
+<!-- ===== 泡 ===== -->
+<div class="bubbles" id="bubbles"></div>
+
+<!-- ===== 中央UI ===== -->
+<div class="text-center space-y-8 text-white">
+
+  <h1 class="text-4xl font-bold drop-shadow-lg">
+    AR水族館
+  </h1>
+
+  <div class="flex flex-col gap-4 w-64 mx-auto">
+
+    <a href="howto.html"
+      class="bg-white text-blue-700 shadow-md rounded-xl py-4 hover:shadow-lg hover:-translate-y-1 transition">
+      使い方
+    </a>
+
+    <a href="aquarium.html"
+      class="bg-blue-500 shadow-md rounded-xl py-4 hover:bg-blue-600 hover:-translate-y-1 transition">
+      入室する
+    </a>
+
+    <a href="post.html"
+      class="bg-white text-blue-700 shadow-md rounded-xl py-4 hover:shadow-lg hover:-translate-y-1 transition">
+      投稿する
+    </a>
+
+    <a href="transparent.html"
+      class="bg-white text-blue-700 shadow-md rounded-xl py-4 hover:shadow-lg hover:-translate-y-1 transition">
+      画像透過
+    </a>
+
+  </div>
+</div>
+
+<script>
+/* ===== ランダム泡生成 ===== */
+const container = document.getElementById("bubbles");
+
+for (let i = 0; i < 25; i++) {
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+
+  const size = Math.random() * 60 + 20;
+  bubble.style.width = size + "px";
+  bubble.style.height = size + "px";
+
+  bubble.style.left = Math.random() * 100 + "%";
+  bubble.style.animationDuration = Math.random() * 10 + 8 + "s";
+  bubble.style.animationDelay = Math.random() * 5 + "s";
+
+  container.appendChild(bubble);
+}
+</script>
+
+</body>
+</html>
