@@ -1,90 +1,243 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
-<title>入力グラフ</title>
+<title>mindmap</title>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<!-- グラフライブラリ -->
-<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
-<style>
-body {
-  font-family: sans-serif;
-  margin: 20px;
-}
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-family: sans-serif;
+        }
 
-#network {
-  width: 100%;
-  height: 500px;
-  border: 1px solid #ccc;
-}
+        #panel {
+            width: 300px;
+            padding: 12px;
+            border-right: 1px solid #ddd;
+            display:none;
+        }
 
-textarea {
-  width: 100%;
-  height: 120px;
-}
-</style>
+        textarea {
+            width: 100%;
+            height: 200px;
+        }
+
+        #canvas {
+            flex: 1;
+            background: #fafafa;
+            cursor: grab;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
 
-<h2>関係入力グラフ</h2>
+    <div id="panel">
+        <h3>input-graph</h3>
 
-<p>「A,B」の形式で入力してください</p>
-
-<textarea id="input">
-鯖,海水魚
-鮎,淡水魚
-鯨,哺乳類
-鯖,10画
+        <textarea id="input">
+cat,animal
+dog,animal
+animal,lives
 </textarea>
 
-<br><br>
-<button onclick="drawGraph()">グラフ表示</button>
+        <button onclick="build()">更新</button>
 
-<div id="network"></div>
+        <p>形式: nodeA,nodeB</p>
+    </div>
 
-<script>
-function drawGraph() {
-  const text = document.getElementById("input").value;
-  const lines = text.split("\n");
+    <canvas id="canvas"></canvas>
 
-  let nodes = new Map();
-  let edges = [];
+    <script>
+        const canvas = document.getElementById("canvas")
+        const ctx = canvas.getContext("2d")
 
-  lines.forEach(line => {
-    const parts = line.split(",");
-    if (parts.length !== 2) return;
+        let nodes = []
+        let links = []
 
-    const from = parts[0].trim();
-    const to = parts[1].trim();
+        let draggingNode = null
 
-    // ノード登録（重複防止）
-    if (!nodes.has(from)) nodes.set(from, { id: from, label: from });
-    if (!nodes.has(to)) nodes.set(to, { id: to, label: to });
+        // --------------------
+        // canvas resize
+        // --------------------
+        function resize() {
+            canvas.width = canvas.clientWidth
+            canvas.height = canvas.clientHeight
+        }
+        window.addEventListener("resize", resize)
+        resize()
 
-    edges.push({ from: from, to: to });
-  });
+        // --------------------
+        // build graph
+        // --------------------
+        function build() {
 
-  const container = document.getElementById("network");
+            const text = document.getElementById("input").value.trim()
+            const lines = text.split("\n")
 
-  const data = {
-    nodes: Array.from(nodes.values()),
-    edges: edges
-  };
+            const map = new Map()
+            links = []
 
-  const options = {
-    physics: {
-      enabled: true
-    }
-  };
+            lines.forEach(line => {
+                const [a, b] = line.split(",").map(v => v.trim())
+                if (!a || !b) return
 
-  new vis.Network(container, data, options);
-}
+                if (!map.has(a)) map.set(a, newNode(a))
+                if (!map.has(b)) map.set(b, newNode(b))
 
-// 初回表示
-drawGraph();
-</script>
+                links.push({
+                    source: map.get(a),
+                    target: map.get(b)
+                })
+            })
 
+            nodes = [...map.values()]
+        }
+
+        function newNode(id) {
+            return {
+                id,
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2,
+                r: 20
+            }
+        }
+
+        // --------------------
+        // physics
+        // --------------------
+        function update() {
+
+            // ばね（リンク）
+            links.forEach(l => {
+                const dx = l.target.x - l.source.x
+                const dy = l.target.y - l.source.y
+                const dist = Math.hypot(dx, dy) || 1
+
+                const desired = 70
+                const force = (dist - desired) * 0.02
+
+                const fx = force * dx / dist
+                const fy = force * dy / dist
+
+                l.source.vx += fx
+                l.source.vy += fy
+                l.target.vx -= fx
+                l.target.vy -= fy
+            })
+
+            // ノード反発
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const a = nodes[i]
+                    const b = nodes[j]
+
+                    const dx = b.x - a.x
+                    const dy = b.y - a.y
+                    const d2 = dx * dx + dy * dy || 1
+
+                    const rep = 500 / d2
+                    a.vx -= rep * dx
+                    a.vy -= rep * dy
+                    b.vx += rep * dx
+                    b.vy += rep * dy
+                }
+            }
+
+            // 移動 + 摩擦
+            nodes.forEach(n => {
+
+                // ★ 常に少し揺らす（追加）
+                n.vx += (Math.random() - 0.5) * 0.05
+                n.vy += (Math.random() - 0.5) * 0.05
+
+                if (n !== draggingNode) {
+                    n.x += n.vx
+                    n.y += n.vy
+                }
+
+                n.vx *= 0.95
+                n.vy *= 0.95
+            })
+        }
+
+        // --------------------
+        // draw
+        // --------------------
+        function draw() {
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+            // links
+            ctx.strokeStyle = "#aaa"
+            links.forEach(l => {
+                ctx.beginPath()
+                ctx.moveTo(l.source.x, l.source.y)
+                ctx.lineTo(l.target.x, l.target.y)
+                ctx.stroke()
+            })
+
+            // nodes
+            nodes.forEach(n => {
+                ctx.beginPath()
+                ctx.fillStyle = "#4f46e5"
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2)
+                ctx.fill()
+
+                ctx.fillStyle = "white"
+                ctx.textAlign = "center"
+                ctx.textBaseline = "middle"
+                ctx.fillText(n.id, n.x, n.y)
+            })
+        }
+
+        // --------------------
+        // animation loop
+        // --------------------
+        function animate() {
+            update()
+            draw()
+            requestAnimationFrame(animate)
+        }
+        animate()
+
+        // --------------------
+        // drag
+        // --------------------
+        canvas.addEventListener("mousedown", e => {
+            const rect = canvas.getBoundingClientRect()
+            const mx = e.clientX - rect.left
+            const my = e.clientY - rect.top
+
+            draggingNode = nodes.find(n => {
+                return Math.hypot(n.x - mx, n.y - my) < n.r
+            })
+        })
+
+        canvas.addEventListener("mousemove", e => {
+            if (!draggingNode) return
+            const rect = canvas.getBoundingClientRect()
+            draggingNode.x = e.clientX - rect.left
+            draggingNode.y = e.clientY - rect.top
+            draggingNode.vx = 0
+            draggingNode.vy = 0
+        })
+
+        window.addEventListener("mouseup", () => {
+            draggingNode = null
+        })
+
+        // 初期
+        build()
+
+    </script>
 </body>
+
 </html>
