@@ -147,10 +147,7 @@
     }
 
     #beginner,
-    #manual,
-    #post,
-    #data-source,
-    #sns-share {
+    #manual{
       display: none;
       height: 85%;
       max-height: 800px;
@@ -158,7 +155,7 @@
       position: fixed;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 95%;
+      width: 90%;
       max-width: 600px;
       z-index: 11;
       background: #ffffff;
@@ -167,31 +164,24 @@
     }
 
     .overview {
-      height: 90%;
+      height: 85%;
     }
 
     #closed-btn,
-    #closed-btn2,
-    #closed-btn3,
-    #closed-btn4,
-    #closed-btn5 {
+    #closed-btn2 {
       position: absolute;
       top: 5px;
       right: 5px;
-      border-radius: 100%;
+      border-radius: .5em;
       color: #000000;
+      padding: .3em;
       border: 1px solid #000000;
       cursor: pointer;
-      width: 30px;
-      height: 30px;
       text-align: center;
     }
 
     #closed-btn:hover,
-    #closed-btn2:hover,
-    #closed-btn3:hover,
-    #closed-btn4:hover,
-    #closed-btn5:hover {
+    #closed-btn2:hover{
       background: rgba(0, 0, 0, .5);
       color: #ffffff;
       border: 1px solid #ffffff;
@@ -430,8 +420,8 @@
   <!-- ポップアップ用のoverlay -->
   <div id="overlay"></div>
 
-  <!-- 使い方 -->
-  <div id="beginner"><span id="closed-btn">×</span>
+  <!-- はじめに -->
+  <div id="beginner"><span id="closed-btn">閉じる</span>
     <h3 class="text-2xl text-center"><i class="fa-solid fa-user"></i> はじめに</h3>
 
     <div class="overflow-y-scroll overview mt-5 mx-2">
@@ -488,10 +478,10 @@
   </div>
 
   <!-- 使い方 -->
-  <div id="manual"><span id="closed-btn2">×</span>
+  <div id="manual"><span id="closed-btn2">閉じる</span>
     <h3 class="text-2xl text-center"><i class="fa-solid fa-book-open"></i> 使い方</h3>
 
-    <div class="overflow-y-scroll overview mt-5 mx-2">
+    <div class="overflow-y-scroll overview mt-5 mx-2 px-2">
 
       <h3 class="text-2xl" id="manual_h3">インストール方法</h3>
       <p class="mt-5">PWAに対応しているので、iPhone、Androidともに、WEBブラウザの「ホーム画面に追加」からインストールできます。</p>
@@ -507,10 +497,6 @@
       <h3 class="text-2xl mt-7" id="manual_h3">検索機能</h3>
       <p class="mt-5">Searchのテキストボックスに漢字やかなと入れると、検索できます。</p>
       <p class="mt-5">この漢字は登録されているかな？と思ったら、検索してみてください。</p>
-
-      <h3 class="text-2xl mt-7" id="manual_h3">投稿をお待ちしています</h3>
-      <p class="mt-5">もし、アプリに登録されていない漢字を見つけたら「投稿する」ボタンより、情報提供をお願いします。</p>
-      <p class="my-5">皆さまの投稿をお待ちしております。</p>
 
     </div>
 
@@ -562,11 +548,11 @@
 
       });
 
-      const id = "AKfycbw8pOlBgPxDYeYhRqqkp7qJFFK0e456Osr0FSiKvEEtTZHvhEHOuXK82OxB2JfuP7m7";
+      const id = "AKfycbwvc0wSLmhTy6vmi2Ez2PZPpuCvlGHDBRx1FhRVB8Ui5U20sEY1ne0kfmWwQ38EOx4cHg";
 
       const res = await fetch("https://script.google.com/macros/s/" + id + "/exec");
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
 
 
       //const data = await d3.csv('./data/word.csv');
@@ -585,10 +571,10 @@
           gpt = "×";
         }*/
 
-        let dd = new Date(data[i].update);
+        let dd = new Date(data[i]["日付"]);
         let day = dd.toLocaleDateString();
 
-        result.innerHTML += '<div class="table grid grid-rows-3 grid-cols-3 grid-flow-col gap-2 items-center"><div class="item_title text-8xl row-span-3">' + data[i].word + '</div><div class="text-lg col-span-3">' + data[i].yomi + '</div><div class="text-sm row-span-1 col-span-3">' + data[i].meaning + " 画数：" + data[i].stroke + "</span><span id='update'>データ更新日：" + day + '</span></div>';
+        result.innerHTML += '<div class="table grid grid-rows-3 grid-cols-3 grid-flow-col gap-2 items-center"><div class="item_title text-8xl row-span-3">' + data[i]["漢字"] + '</div><div class="text-3xl col-span-3">' + data[i]["読み方"] + '</div><div class="text-sm row-span-1 col-span-3">' + " 画数：" + data[i]["画数"] + "</span><span id='update'>データ更新日：" + day + '</span></div>';
 
       };
 
@@ -599,7 +585,7 @@
 
       async () => {
 
-        const id = "AKfycbw8pOlBgPxDYeYhRqqkp7qJFFK0e456Osr0FSiKvEEtTZHvhEHOuXK82OxB2JfuP7m7";
+        const id = "AKfycbwvc0wSLmhTy6vmi2Ez2PZPpuCvlGHDBRx1FhRVB8Ui5U20sEY1ne0kfmWwQ38EOx4cHg";
         const res = await fetch("https://script.google.com/macros/s/" + id + "/exec");
         const data = await res.json();
 
@@ -618,7 +604,7 @@
 
           for (let j = 0; j < max; j++) {
 
-            if (data[j].word.indexOf(kensaku) != -1 || data[j].yomi.indexOf(kensaku) != -1 || data[j].meaning.indexOf(kensaku) != -1) {
+            if (data[j]["漢字"].indexOf(kensaku) != -1 || data[j]["読み方"].indexOf(kensaku) != -1) {
 
               /*if (data[j].ai == "y") {
                 gpt = "◯";
@@ -627,10 +613,10 @@
                 gpt = "×";
               }*/
 
-              let dd = new Date(data[j].update);
+              let dd = new Date(data[j]["日付"]);
               let day = dd.toLocaleDateString();
 
-              result.innerHTML += '<div class="table grid grid-rows-3 grid-cols-3 grid-flow-col gap-2 items-center"><div class="item_title text-8xl row-span-3">' + data[j].word + '</div><div class="text-lg col-span-3">' + data[j].yomi + '</div><div class="text-sm row-span-1 col-span-3">' + data[j].meaning + " 画数：" + data[j].stroke + "</span><span id='update'>データ更新日：" + day + '</span></div>';
+              result.innerHTML += '<div class="table grid grid-rows-3 grid-cols-3 grid-flow-col gap-2 items-center"><div class="item_title text-8xl row-span-3">' + data[j]["漢字"] + '</div><div class="text-3xl col-span-3">' + data[j]["読み方"] + '</div><div class="text-sm row-span-1 col-span-3">' + " 画数：" + data[j]["画数"] + "</span><span id='update'>データ更新日：" + day + '</span></div>';
 
               count += 1;
 
@@ -645,7 +631,7 @@
 
           result.innerHTML = "";
 
-          const id = "AKfycbw8pOlBgPxDYeYhRqqkp7qJFFK0e456Osr0FSiKvEEtTZHvhEHOuXK82OxB2JfuP7m7";
+          const id = "AKfycbwvc0wSLmhTy6vmi2Ez2PZPpuCvlGHDBRx1FhRVB8Ui5U20sEY1ne0kfmWwQ38EOx4cHg";
           const res = await fetch("https://script.google.com/macros/s/" + id + "/exec");
           const data = await res.json();
 
@@ -663,7 +649,10 @@
               gpt = "×";
             }*/
 
-            result.innerHTML += '<div class="table grid grid-rows-3 grid-cols-3 grid-flow-col gap-2 items-center"><div class="item_title text-8xl row-span-3">' + data[i].word + '</div><div class="text-lg col-span-3">' + data[i].yomi + '</div><div class="text-sm row-span-1 col-span-3">' + data[i].meaning + " 画数：" + data[i].stroke + "</span><span id='update'>データ更新日：" + data[i].update + '</span></div>';
+            let dd = new Date(data[i]["日付"]);
+            let day = dd.toLocaleDateString();
+
+            result.innerHTML += '<div class="table grid grid-rows-3 grid-cols-3 grid-flow-col gap-2 items-center"><div class="item_title text-8xl row-span-3">' + data[i]["漢字"] + '</div><div class="text-3xl col-span-3">' + data[i]["読み方"] + '</div><div class="text-sm row-span-1 col-span-3">' + " 画数：" + data[i]["画数"] + "</span><span id='update'>データ更新日：" + day + '</span></div>';
 
           };
 
